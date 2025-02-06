@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\EmailController;
 
 class AuthController extends Controller
 {
@@ -35,9 +36,12 @@ class AuthController extends Controller
             'email_address' => $request->email_address,
             'password' => $request->password,
         ]);
-
         // return $createUser;
         if ($createUser):
+            // Sending signup mail
+            $newSignupMail = new EmailController();
+            $newSignupMail->sendSignupMail($request->first_name, $request->email_address);
+            
             return redirect()->route('user.login.page')->with('registrationStatus', 'You have successfully registered!');
         else:
             return redirect()->route('user.register.page');
@@ -69,11 +73,12 @@ class AuthController extends Controller
 
     // Dashboard Page
     public function dashboardPage(){
-        if(Auth::check()):
-            return view('user.dashboard');
-        else:
-            return redirect()->route('user.login.page');
-        endif;
+        return view('user.dashboard');
+    }
+
+    public function logoutUser(){
+        Auth::logout();
+        return redirect()->route('user.login.page');
     }
 
 }

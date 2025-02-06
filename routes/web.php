@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\AuthMiddleware;
 
 Route::redirect('/', 'login');
 
@@ -20,6 +21,9 @@ Route::controller(AuthController::class)->group(function(){
     Route::put('/loginUser', 'userLogin')->name('user.login');
 
     // Dashboard Page
-    Route::get('/dashboard', 'dashboardPage')->name('dashboard.page');
+    Route::get('/dashboard', 'dashboardPage')->name('dashboard.page')->middleware('IsValidUser');
+
+    // Logout User
+    Route::get('/logout', 'logoutUser')->name('user.logout.page');
 
 });
