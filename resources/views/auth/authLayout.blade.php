@@ -32,6 +32,12 @@
     <link id="color" rel="stylesheet" href="assets/css/color-1.css" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
+    <style>
+      .login-sec-card{
+        flex-direction: column;
+        align-items: end;
+      }
+    </style>
   </head>
   <body>
     
